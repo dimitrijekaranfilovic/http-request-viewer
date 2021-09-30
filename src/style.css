@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-item {
+  margin-top: 10rem;
+  margin-left: 2.5rem;
+  margin-right: 5rem;
+}
