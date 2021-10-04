@@ -5,6 +5,7 @@ const FormRequest = ({ showModal }) => {
   const headerKey = useRef(null);
   const headerValue = useRef(null);
   const url = useRef(null);
+  const method = useRef(null);
 
   const removeHeader = (key) => {
     setHeaders((oldHeaders) => {
@@ -35,8 +36,8 @@ const FormRequest = ({ showModal }) => {
   };
 
   const performRequest = async () => {
-    const response = await fetch(url.current.value);
-    console.log(response);
+    //const requestHeaders = new Headers();
+    //const request = new Request();
   };
 
   return (
@@ -46,8 +47,7 @@ const FormRequest = ({ showModal }) => {
       </div>
 
       <section>
-        {/* <label htmlFor="url">URL</label> */}
-        <select name="request" id="request">
+        <select name="request" id="request" ref={method}>
           <option value="get">GET</option>
           <option value="post">POST</option>
           <option value="put">PUT</option>
@@ -68,12 +68,19 @@ const FormRequest = ({ showModal }) => {
               <div key={header.key}>
                 <input type="text" value={header.key} readOnly />
                 <input type="text" value={header.value} readOnly />
-                <button type="button" onClick={() => removeHeader(header.key)}>
-                  Remove
+                <button
+                  type="button"
+                  className="btn error-btn"
+                  onClick={() => removeHeader(header.key)}
+                >
+                  &times;
                 </button>
               </div>
             );
           })}
+          {headers.length === 0 && (
+            <strong>There are currently no headers.</strong>
+          )}
         </div>
       </section>
       <br />
@@ -92,11 +99,11 @@ const FormRequest = ({ showModal }) => {
           placeholder="Header value"
           ref={headerValue}
         />
-        <button type="button" onClick={addHeader}>
-          Add header
+        <button type="button" className="btn ok-btn" onClick={addHeader}>
+          +
         </button>
       </div>
-      <button type="button" onClick={performRequest}>
+      <button type="button" className="btn info-btn" onClick={performRequest}>
         Perform
       </button>
     </React.Fragment>

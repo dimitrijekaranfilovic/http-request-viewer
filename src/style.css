@@ -54,5 +54,34 @@ textarea {
 
 .header-container {
   max-height: 75px;
+  min-height: 75px;
   overflow-y: auto;
+  width: fit-content;
+}
+
+.btn {
+  cursor: pointer;
+  outline: none;
+
+  transition: all 0.3s ease 0s;
+  color: white;
+  /* border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;*/
+}
+
+.error-btn {
+  background-color: red;
+}
+
+.ok-btn {
+  background-color: green;
+}
+
+.info-btn {
+  background-color: rgb(31, 143, 235);
+  border-radius: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: none;
 }
