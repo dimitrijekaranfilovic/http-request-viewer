@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react";
 
 const FormRequest = () => {
-  const [api, setApi] = useState("fetch");
   const [headers, setHeaders] = useState([]);
   const headerKey = useRef(null);
   const headerValue = useRef(null);
+  const url = useRef(null);
 
   const removeHeader = (key) => {
     setHeaders((oldHeaders) => {
@@ -23,72 +23,68 @@ const FormRequest = () => {
     });
   };
 
-  const performRequest = () => {
-    console.log(api);
+  const performRequest = async () => {
+    const response = await fetch(url.current.value);
+    console.log(response);
   };
 
   return (
     <React.Fragment>
       <div>
-        <h4>FETCH/XMLHTTP</h4>
-
-        <div>
-          <label htmlFor="api-select">API</label>
-          <select
-            name="api-select"
-            id="api-select"
-            value={api}
-            onChange={(e) => setApi(e.target.value)}
-          >
-            <option value="fetch">Fetch</option>
-            <option value="xml">XMLHtp</option>
-          </select>
-        </div>
+        <h3>FETCH</h3>
       </div>
 
-      <div>
-        <label htmlFor="url">URL</label>
-        <input type="text" name="url" id="url" />
-      </div>
+      <section>
+        {/* <label htmlFor="url">URL</label> */}
+        <select name="request" id="request">
+          <option value="get">GET</option>
+          <option value="post">POST</option>
+          <option value="put">PUT</option>
+          <option value="delete">DELETE</option>
+        </select>
+        <input type="text" name="url" id="url" ref={url} placeholder="url" />
+      </section>
 
       <div>
-        <div>
-          <h3>Headers</h3>
-          {headers.map((header) => {
-            return (
-              <div key={header.key}>
-                <input type="text" value={header.key} readOnly />
-                <input type="text" value={header.value} readOnly />
-                <button type="button" onClick={() => removeHeader(header.key)}>
-                  Remove
-                </button>
-              </div>
-            );
-          })}
-        </div>
-        <div>
-          <input
-            type="text"
-            name="header-key"
-            id="header-key"
-            ref={headerKey}
-          />
-          <input
-            type="text"
-            name="header-value"
-            id="header-value"
-            ref={headerValue}
-          />
-          <button type="button" onClick={addHeader}>
-            Add header
-          </button>
-        </div>
+        <h4>Options</h4>
       </div>
+
+      <section>
+        <h4>Headers</h4>
+        {headers.map((header) => {
+          return (
+            <div key={header.key}>
+              <input type="text" value={header.key} readOnly />
+              <input type="text" value={header.value} readOnly />
+              <button type="button" onClick={() => removeHeader(header.key)}>
+                Remove
+              </button>
+            </div>
+          );
+        })}
+      </section>
       <div>
-        <button type="button" onClick={performRequest}>
-          Perform
+        <input
+          type="text"
+          name="header-key"
+          id="header-key"
+          placeholder="Header name"
+          ref={headerKey}
+        />
+        <input
+          type="text"
+          name="header-value"
+          id="header-value"
+          placeholder="Header value"
+          ref={headerValue}
+        />
+        <button type="button" onClick={addHeader}>
+          Add header
         </button>
       </div>
+      <button type="button" onClick={performRequest}>
+        Perform
+      </button>
     </React.Fragment>
   );
 };

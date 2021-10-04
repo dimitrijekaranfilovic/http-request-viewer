@@ -4,7 +4,7 @@ const Response = () => {
   return (
     <React.Fragment>
       <div className="response-div">
-        <h4>Response</h4>
+        <h3>RESPONSE</h3>
         <textarea
           name="response"
           id="response"
