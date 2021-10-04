@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-const FormRequest = () => {
+const FormRequest = ({ showModal }) => {
   const [headers, setHeaders] = useState([]);
   const headerKey = useRef(null);
   const headerValue = useRef(null);
@@ -15,12 +15,23 @@ const FormRequest = () => {
   const addHeader = () => {
     const key = headerKey.current.value;
     const value = headerValue.current.value;
-    setHeaders((oldHeaders) => {
-      const newHeaders = [...oldHeaders, { key, value }];
-      headerKey.current.value = "";
-      headerValue.current.value = "";
-      return newHeaders;
-    });
+    if (headerExists(key)) {
+      showModal(`Header with name '${key}' already exists.`, "error");
+    } else if (!key || !value) {
+      showModal("Header name and value cannot be empty.", "error");
+    } else {
+      setHeaders((oldHeaders) => {
+        const newHeaders = [...oldHeaders, { key, value }];
+        headerKey.current.value = "";
+        headerValue.current.value = "";
+        return newHeaders;
+      });
+      showModal("Header successfully added.", "success");
+    }
+  };
+
+  const headerExists = (headerKey) => {
+    return headers.find((header) => header.key === headerKey) !== undefined;
   };
 
   const performRequest = async () => {
@@ -51,18 +62,21 @@ const FormRequest = () => {
 
       <section>
         <h4>Headers</h4>
-        {headers.map((header) => {
-          return (
-            <div key={header.key}>
-              <input type="text" value={header.key} readOnly />
-              <input type="text" value={header.value} readOnly />
-              <button type="button" onClick={() => removeHeader(header.key)}>
-                Remove
-              </button>
-            </div>
-          );
-        })}
+        <div className="header-container">
+          {headers.map((header) => {
+            return (
+              <div key={header.key}>
+                <input type="text" value={header.key} readOnly />
+                <input type="text" value={header.value} readOnly />
+                <button type="button" onClick={() => removeHeader(header.key)}>
+                  Remove
+                </button>
+              </div>
+            );
+          })}
+        </div>
       </section>
+      <br />
       <div>
         <input
           type="text"

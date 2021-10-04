@@ -1,9 +1,15 @@
 import React, { useEffect } from "react";
 
 const Modal = ({ messageType, messageContent, closeModal }) => {
+  useEffect(() => {
+    setTimeout(() => closeModal(), 3000);
+  }, []);
+  const modalClass = `modal ${messageType}`;
   return (
     <React.Fragment>
-      <h4 className={messageType}>{{ messageContent }}</h4>
+      <div className={modalClass}>
+        <h6 className={messageType}>{messageContent}</h6>
+      </div>
     </React.Fragment>
   );
 };
