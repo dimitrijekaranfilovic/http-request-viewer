@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 
-const Modal = ({ messageType, messageContent, closeModal }) => {
+const Modal = ({ messageType, messageContent, closeModal, displayTime }) => {
   useEffect(() => {
-    setTimeout(() => closeModal(), 3000);
+    setTimeout(() => closeModal(), displayTime);
   }, [closeModal]);
   const modalClass = `modal ${messageType}`;
   return (

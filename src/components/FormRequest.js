@@ -51,19 +51,42 @@ const FormRequest = ({ showModal, setResponseHeaders }) => {
   };
 
   const performRequest = async () => {
-    let headers = new Headers();
-    requestHeaders.forEach((requestHeader) => {
-      headers.append(requestHeader.key, requestHeader.value);
-    });
+    const address = url.current.value;
+    if (!address) showModal("URL cannot be empty.", "error");
+    else {
+      let headers = new Headers();
+      requestHeaders.forEach((requestHeader) => {
+        headers.append(requestHeader.key, requestHeader.value);
+      });
 
-    const response = await fetch(url.current.value, {
-      ...otherOptions,
-      method: method.current.value,
-      headers,
-    });
-    const data = await response.json();
-    const responseHeaders = response.headers;
-    console.log(data);
+      try {
+        const response = await fetch(address, {
+          ...otherOptions,
+          method: method.current.value,
+          headers,
+        });
+      } catch (error) {
+        showModal(
+          `${error.message}.\n${"Check the console for more info."}`,
+          "error",
+          5000
+        );
+      }
+    }
+
+    // .then((response) => response.json())
+    // .catch((error) => {
+    //   console.log('error when')
+    //   console.log(error);
+
+    //   //showModal(error, "error");
+    // })
+    // .then((data) => {
+    //   console.log(data);
+    // })
+    // .catch((error) => {
+    //   //showModal(error, "error");
+    // });
   };
 
   return (

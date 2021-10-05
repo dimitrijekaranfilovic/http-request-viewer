@@ -5,6 +5,7 @@ export const useModal = () => {
     messageContent: "",
     messageType: "",
     isModal: false,
+    displayTime: 3000,
   });
 
   const closeModal = () => {
@@ -12,8 +13,8 @@ export const useModal = () => {
       return { ...oldState, isModal: false };
     });
   };
-  const showModal = (messageContent, messageType) => {
-    setModalState({ messageContent, messageType, isModal: true });
+  const showModal = (messageContent, messageType, displayTime = 3000) => {
+    setModalState({ messageContent, messageType, isModal: true, displayTime });
   };
 
   return { modalState, showModal, closeModal };
