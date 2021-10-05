@@ -1,16 +1,28 @@
 import React, { useState, useRef } from "react";
 
-const FormRequest = ({ showModal, responseHeaders, setResponseHeaders }) => {
+const FormRequest = ({ showModal, setResponseHeaders }) => {
   const [requestHeaders, setRequestHeaders] = useState([]);
+  const [otherOptions, setOtherOptions] = useState({
+    mode: "cors",
+    credentials: "omit",
+    cache: "default",
+  });
   const headerKey = useRef(null);
   const headerValue = useRef(null);
   const url = useRef(null);
   const method = useRef(null);
-  const mode = useRef(null);
 
   const removeRequestHeader = (key) => {
     setRequestHeaders((oldRequestHeaders) => {
       return oldRequestHeaders.filter((header) => header.key !== key);
+    });
+  };
+
+  const updateOtherOptions = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setOtherOptions((oldOtherOptions) => {
+      return { ...oldOtherOptions, [name]: value };
     });
   };
 
@@ -38,19 +50,20 @@ const FormRequest = ({ showModal, responseHeaders, setResponseHeaders }) => {
     );
   };
 
-  const createRequestHeadersObject = () => {
+  const performRequest = async () => {
     let headers = new Headers();
     requestHeaders.forEach((requestHeader) => {
       headers.append(requestHeader.key, requestHeader.value);
     });
-    //console.log(headers);
-    return headers;
-  };
 
-  const performRequest = async () => {
-    //const requestRequestHeaders = new RequestHeaders();
-    //const request = new Request();
-    const headers = createRequestHeadersObject();
+    const response = await fetch(url.current.value, {
+      ...otherOptions,
+      method: method.current.value,
+      headers,
+    });
+    const data = await response.json();
+    const responseHeaders = response.headers;
+    console.log(data);
   };
 
   return (
@@ -70,14 +83,33 @@ const FormRequest = ({ showModal, responseHeaders, setResponseHeaders }) => {
       </div>
 
       <section className="options-container">
-        <div>
-          <label htmlFor="mode">mode</label>
-          <input type="text" name="mode" id="mode" ref={mode} />
-        </div>
-        <div>
-          <label htmlFor="credentials">credentials</label>
-          <input type="text" name="credentials" id="credentials" />
-        </div>
+        <label htmlFor="mode">mode</label>
+        <select name="mode" id="mode" onChange={(e) => updateOtherOptions(e)}>
+          <option value="cors">cors</option>
+          <option value="no-cors">no-cors</option>
+          <option value="same-origin">same-origin</option>
+        </select>
+
+        <label htmlFor="credentials">credentials</label>
+        <select
+          name="credentials"
+          id="credentials"
+          onChange={(e) => updateOtherOptions(e)}
+        >
+          <option value="omit">omit</option>
+          <option value="same-origin">same-origin</option>
+          <option value="include">include</option>
+        </select>
+
+        <label htmlFor="cache">cache</label>
+        <select name="cache" id="cache" onChange={(e) => updateOtherOptions(e)}>
+          <option value="default">default</option>
+          <option value="no-store">no-store</option>
+          <option value="reload">reload</option>
+          <option value="no-cache">no-cache</option>
+          <option value="force-cache">force-cache</option>
+          <option value="only-if-cached">only-if-cached</option>
+        </select>
       </section>
 
       <section>

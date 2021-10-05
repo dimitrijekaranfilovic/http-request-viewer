@@ -24,7 +24,6 @@ const App = () => {
           <h3>REQUEST</h3>
           <FormRequest
             showModal={showModal}
-            responseHeaders={responseHeaders}
             setResponseHeaders={setResponseHeaders}
           />
         </div>

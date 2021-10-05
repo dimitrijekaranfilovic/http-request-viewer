@@ -11,7 +11,7 @@
 }
 
 .container {
-  margin-top: 7.5rem;
+  margin-top: 6rem;
   display: flex;
   align-items: baseline;
   justify-content: flex-start;
@@ -68,13 +68,6 @@ textarea {
   width: fit-content;
 }
 
-.options-container {
-  max-height: 80px;
-  min-height: 80px;
-  overflow-y: auto;
-  width: fit-content;
-}
-
 .btn {
   cursor: pointer;
   outline: none;
@@ -97,4 +90,13 @@ textarea {
   text-transform: uppercase;
   letter-spacing: 1px;
   box-shadow: none;
+}
+
+section.options-container {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  grid-gap: 5px;
+}
+section.options-container label {
+  text-align: left;
 }
