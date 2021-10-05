@@ -1,19 +1,45 @@
 import React from "react";
 
-const Response = () => {
+const Response = ({ responseHeaders }) => {
   return (
-    <React.Fragment>
-      <div className="response-div">
-        <h3>RESPONSE</h3>
-        <textarea
-          name="response"
-          id="response"
-          cols="50"
-          rows="15"
+    <div>
+      <section className="status-container">
+        <input
+          type="text"
+          name="status-code"
+          id="status-code"
+          placeholder="Status code"
           readOnly
-        ></textarea>
+          style={{
+            width: "25%",
+          }}
+        />
+        <input
+          type="text"
+          name="status-text"
+          id="status-text"
+          placeholder="Status text"
+          readOnly
+        />
+      </section>
+
+      <div>
+        <h4>Headers</h4>
+        <div className="header-container">
+          {responseHeaders.map((header) => {
+            return (
+              <div key={header.key}>
+                <input type="text" value={header.key} readOnly />
+                <input type="text" value={header.value} readOnly />
+              </div>
+            );
+          })}
+          {responseHeaders.length === 0 && (
+            <p>There are currently no headers.</p>
+          )}
+        </div>
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import FormRequest from "./FormRequest";
 import Response from "./Response";
 import Modal from "./Modal";
@@ -6,6 +6,7 @@ import { useModal } from "../hooks/useModal";
 
 const App = () => {
   const { modalState, showModal, closeModal } = useModal();
+  const [responseHeaders, setResponseHeaders] = useState([]);
 
   return (
     <React.Fragment>
@@ -20,10 +21,16 @@ const App = () => {
       </div>
       <div className="container">
         <div className="container-item">
-          <FormRequest showModal={showModal} />
+          <h3>REQUEST</h3>
+          <FormRequest
+            showModal={showModal}
+            responseHeaders={responseHeaders}
+            setResponseHeaders={setResponseHeaders}
+          />
         </div>
         <div className="container-item">
-          <Response />
+          <h3>RESPONSE</h3>
+          <Response responseHeaders={responseHeaders} />
         </div>
       </div>
     </React.Fragment>

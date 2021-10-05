@@ -1,19 +1,20 @@
 import React, { useState, useRef } from "react";
 
-const FormRequest = ({ showModal }) => {
-  const [headers, setHeaders] = useState([]);
+const FormRequest = ({ showModal, responseHeaders, setResponseHeaders }) => {
+  const [requestHeaders, setRequestHeaders] = useState([]);
   const headerKey = useRef(null);
   const headerValue = useRef(null);
   const url = useRef(null);
   const method = useRef(null);
+  const mode = useRef(null);
 
-  const removeHeader = (key) => {
-    setHeaders((oldHeaders) => {
-      return oldHeaders.filter((header) => header.key !== key);
+  const removeRequestHeader = (key) => {
+    setRequestHeaders((oldRequestHeaders) => {
+      return oldRequestHeaders.filter((header) => header.key !== key);
     });
   };
 
-  const addHeader = () => {
+  const addRequestHeader = () => {
     const key = headerKey.current.value;
     const value = headerValue.current.value;
     if (headerExists(key)) {
@@ -21,31 +22,39 @@ const FormRequest = ({ showModal }) => {
     } else if (!key || !value) {
       showModal("Header name and value cannot be empty.", "error");
     } else {
-      setHeaders((oldHeaders) => {
-        const newHeaders = [...oldHeaders, { key, value }];
+      setRequestHeaders((oldRequestHeaders) => {
+        const newRequestHeaders = [...oldRequestHeaders, { key, value }];
         headerKey.current.value = "";
         headerValue.current.value = "";
-        return newHeaders;
+        return newRequestHeaders;
       });
       showModal("Header successfully added.", "success");
     }
   };
 
   const headerExists = (headerKey) => {
-    return headers.find((header) => header.key === headerKey) !== undefined;
+    return (
+      requestHeaders.find((header) => header.key === headerKey) !== undefined
+    );
+  };
+
+  const createRequestHeadersObject = () => {
+    let headers = new Headers();
+    requestHeaders.forEach((requestHeader) => {
+      headers.append(requestHeader.key, requestHeader.value);
+    });
+    //console.log(headers);
+    return headers;
   };
 
   const performRequest = async () => {
-    //const requestHeaders = new Headers();
+    //const requestRequestHeaders = new RequestHeaders();
     //const request = new Request();
+    const headers = createRequestHeadersObject();
   };
 
   return (
-    <React.Fragment>
-      <div>
-        <h3>FETCH</h3>
-      </div>
-
+    <div>
       <section>
         <select name="request" id="request" ref={method}>
           <option value="get">GET</option>
@@ -57,13 +66,24 @@ const FormRequest = ({ showModal }) => {
       </section>
 
       <div>
-        <h4>Options</h4>
+        <h4>Other options</h4>
       </div>
+
+      <section className="options-container">
+        <div>
+          <label htmlFor="mode">mode</label>
+          <input type="text" name="mode" id="mode" ref={mode} />
+        </div>
+        <div>
+          <label htmlFor="credentials">credentials</label>
+          <input type="text" name="credentials" id="credentials" />
+        </div>
+      </section>
 
       <section>
         <h4>Headers</h4>
         <div className="header-container">
-          {headers.map((header) => {
+          {requestHeaders.map((header) => {
             return (
               <div key={header.key}>
                 <input type="text" value={header.key} readOnly />
@@ -71,15 +91,15 @@ const FormRequest = ({ showModal }) => {
                 <button
                   type="button"
                   className="btn error-btn"
-                  onClick={() => removeHeader(header.key)}
+                  onClick={() => removeRequestHeader(header.key)}
                 >
                   &times;
                 </button>
               </div>
             );
           })}
-          {headers.length === 0 && (
-            <strong>There are currently no headers.</strong>
+          {requestHeaders.length === 0 && (
+            <p>There are currently no headers.</p>
           )}
         </div>
       </section>
@@ -99,14 +119,14 @@ const FormRequest = ({ showModal }) => {
           placeholder="Header value"
           ref={headerValue}
         />
-        <button type="button" className="btn ok-btn" onClick={addHeader}>
+        <button type="button" className="btn ok-btn" onClick={addRequestHeader}>
           +
         </button>
       </div>
       <button type="button" className="btn info-btn" onClick={performRequest}>
         Perform
       </button>
-    </React.Fragment>
+    </div>
   );
 };
 
