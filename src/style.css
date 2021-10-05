@@ -15,7 +15,10 @@
   display: flex;
   align-items: baseline;
   justify-content: flex-start;
-  margin-left: 17%;
+  margin-left: 12%;
+  background-color: white;
+  border-radius: 20px;
+  width: 75%;
 }
 
 .container-item {
