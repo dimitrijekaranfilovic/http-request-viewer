@@ -1,6 +1,4 @@
 import React, { useState, lazy, Suspense } from "react";
-//import FormRequest from "./FormRequest";
-//import Response from "./Response";
 import Modal from "./Modal";
 import { useModal } from "../hooks/useModal";
 
