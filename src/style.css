@@ -71,7 +71,7 @@ textarea {
   max-height: 75px;
   min-height: 75px;
   overflow-y: auto;
-  overflow-x: auto;
+  /* overflow-x: auto; */
   width: fit-content;
 }
 
@@ -110,4 +110,9 @@ section.options-container label {
 
 .header-key-input {
   font-weight: bold;
+  width: 40%;
+}
+
+.header-value-input {
+  width: 55%;
 }

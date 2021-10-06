@@ -57,7 +57,12 @@ const Response = ({ response }) => {
                   readOnly
                   className="header-key-input"
                 />
-                <input type="text" value={header[1]} readOnly />
+                <input
+                  type="text"
+                  value={header[1]}
+                  readOnly
+                  className="header-value-input"
+                />
               </div>
             );
           })}
