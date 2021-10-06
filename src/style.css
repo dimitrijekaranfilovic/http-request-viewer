@@ -71,6 +71,7 @@ textarea {
   max-height: 75px;
   min-height: 75px;
   overflow-y: auto;
+  overflow-x: auto;
   width: fit-content;
 }
 
@@ -105,4 +106,8 @@ section.options-container {
 }
 section.options-container label {
   text-align: left;
+}
+
+.header-key-input {
+  font-weight: bold;
 }

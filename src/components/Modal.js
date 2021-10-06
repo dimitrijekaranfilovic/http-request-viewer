@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 const Modal = ({ messageType, messageContent, closeModal, displayTime }) => {
   useEffect(() => {
     setTimeout(() => closeModal(), displayTime);
-  }, [closeModal]);
+  }, [closeModal, displayTime]);
   const modalClass = `modal ${messageType}`;
   return (
     <React.Fragment>

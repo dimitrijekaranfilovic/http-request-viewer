@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-const FormRequest = ({ showModal, setResponseHeaders }) => {
+const FormRequest = ({ showModal, setResponse }) => {
   const [requestHeaders, setRequestHeaders] = useState([]);
   const [otherOptions, setOtherOptions] = useState({
     mode: "cors",
@@ -65,6 +65,12 @@ const FormRequest = ({ showModal, setResponseHeaders }) => {
           method: method.current.value,
           headers,
         });
+        setResponse(response);
+        showModal(
+          "Request successful. For more info, visit the network tab in the developer options",
+          "success",
+          5000
+        );
       } catch (error) {
         showModal(
           `${error.message}.\n${"Check the console for more info."}`,
@@ -73,20 +79,6 @@ const FormRequest = ({ showModal, setResponseHeaders }) => {
         );
       }
     }
-
-    // .then((response) => response.json())
-    // .catch((error) => {
-    //   console.log('error when')
-    //   console.log(error);
-
-    //   //showModal(error, "error");
-    // })
-    // .then((data) => {
-    //   console.log(data);
-    // })
-    // .catch((error) => {
-    //   //showModal(error, "error");
-    // });
   };
 
   return (
@@ -141,7 +133,12 @@ const FormRequest = ({ showModal, setResponseHeaders }) => {
           {requestHeaders.map((header) => {
             return (
               <div key={header.key}>
-                <input type="text" value={header.key} readOnly />
+                <input
+                  type="text"
+                  value={header.key}
+                  readOnly
+                  className="header-key-input"
+                />
                 <input type="text" value={header.value} readOnly />
                 <button
                   type="button"

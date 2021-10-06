@@ -6,7 +6,7 @@ import { useModal } from "../hooks/useModal";
 
 const App = () => {
   const { modalState, showModal, closeModal } = useModal();
-  const [responseHeaders, setResponseHeaders] = useState([]);
+  const [response, setResponse] = useState(undefined);
 
   return (
     <React.Fragment>
@@ -24,14 +24,11 @@ const App = () => {
         <div className="container">
           <div className="container-item">
             <h3>REQUEST</h3>
-            <FormRequest
-              showModal={showModal}
-              setResponseHeaders={setResponseHeaders}
-            />
+            <FormRequest showModal={showModal} setResponse={setResponse} />
           </div>
           <div className="container-item">
             <h3>RESPONSE</h3>
-            <Response responseHeaders={responseHeaders} />
+            <Response response={response} />
           </div>
         </div>
       </div>
