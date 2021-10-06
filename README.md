@@ -10,3 +10,5 @@ When you first clone the project, you need to run `npm install`. Every other tim
 simply run `npm start`.
 
 **Note:** This project is meant to be run from a desktop computer.
+
+The project is also available here: https://dimitrijekaranfilovic.github.io/http-request-viewer/
